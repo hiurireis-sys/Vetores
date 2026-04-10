@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css"/>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0e1a;--card:#161e30;--border:#1f2d47;--accent:#00d4ff;--accent2:#ff6b35;--accent3:#7c3aed;--green:#10b981;--red:#ef4444;--text:#e2e8f0;--muted:#64748b}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;padding:1.5rem;min-height:100vh}
+.katex{color:var(--text)!important;font-size:1em!important}
+h1{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.25rem}
+.sub{color:var(--muted);font-size:.88rem;margin-bottom:1.5rem}
+.wrap{max-width:660px;margin:0 auto}
+.qhdr{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.1rem;margin-bottom:1.1rem;display:flex;align-items:center;gap:1rem}
+.pts{background:linear-gradient(135deg,var(--accent3),var(--accent));border-radius:8px;padding:.4rem .85rem;font-family:'Space Mono',monospace;font-size:.95rem;font-weight:700;color:#fff;white-space:nowrap}
+.progbar{height:5px;background:var(--border);border-radius:3px;overflow:hidden;flex:1}
+.progfill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent3));border-radius:3px;transition:width .4s}
+.progtxt{font-size:.73rem;color:var(--muted);margin-top:.3rem;font-family:'Space Mono',monospace}
+.qcard{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.6rem}
+.qlbl{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--accent2);margin-bottom:.6rem;letter-spacing:.1em}
+.qtxt{font-size:.98rem;font-weight:600;margin-bottom:1.1rem;line-height:1.7}
+.opts{display:flex;flex-direction:column;gap:.6rem}
+.opt{padding:.8rem 1rem;border-radius:9px;text-align:left;background:#111827;border:1px solid var(--border);color:var(--text);font-size:.87rem;cursor:pointer;width:100%;font-family:'DM Sans',sans-serif;transition:all .2s;line-height:1.6}
+.opt:hover:not([disabled]){border-color:var(--accent);color:var(--accent)}
+.opt.ok{background:rgba(16,185,129,.15);border-color:var(--green);color:var(--green)}
+.opt.no{background:rgba(239,68,68,.15);border-color:var(--red);color:var(--red)}
+.opt[disabled]{cursor:default}
+.fb{margin-top:.9rem;padding:.85rem;border-radius:9px;font-size:.87rem;line-height:1.7;display:none}
+.fb.show{display:block}
+.fb.ok{background:rgba(16,185,129,.1);border:1px solid var(--green);color:var(--green)}
+.fb.no{background:rgba(239,68,68,.1);border:1px solid var(--red);color:var(--red)}
+.qnav{display:flex;justify-content:flex-end;margin-top:.9rem}
+.nxtbtn{padding:.6rem 1.3rem;border-radius:8px;background:var(--accent);color:var(--bg);font-weight:700;font-size:.86rem;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;display:none}
+.nxtbtn.show{display:block}
+.result{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2.5rem 2rem;text-align:center;display:none}
+.result.show{display:block}
+.rscore{font-family:'Syne',sans-serif;font-size:3.2rem;font-weight:800;color:var(--accent)}
+.rmsg{font-size:.95rem;color:var(--muted);margin:.4rem 0 1.5rem}
+.rbtn{padding:.75rem 1.6rem;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;font-weight:700;font-size:.9rem;cursor:pointer;border:none;font-family:'DM Sans',sans-serif}
+.wlist{margin-bottom:1.3rem;text-align:left;background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.3);border-radius:9px;padding:.85rem}
+.wlbl{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--red);margin-bottom:.35rem}
+.witem{font-size:.8rem;color:var(--muted);margin-bottom:.22rem}
+</style>
+</head>
+<body>
+<h1>Quiz — Vetores</h1>
+<p class="sub">10 questões para testar seus conhecimentos</p>
+
+<div class="wrap">
+  <div class="qhdr">
+    <div class="pts" id="pts">0 pts</div>
+    <div style="flex:1">
+      <div class="progbar"><div class="progfill" id="pf" style="width:0%"></div></div>
+      <div class="progtxt" id="ptxt">Questão 1 de 10</div>
+    </div>
+  </div>
+  <div class="qcard" id="qcard">
+    <div class="qlbl" id="qlbl">QUESTÃO 1</div>
+    <div class="qtxt" id="qtxt"></div>
+    <div class="opts" id="opts"></div>
+    <div class="fb" id="fb"></div>
+    <div class="qnav"><button class="nxtbtn" id="nxt" onclick="next()">Próxima →</button></div>
+  </div>
+  <div class="result" id="res">
+    <div id="remoji" style="font-size:2.4rem;margin-bottom:.4rem"></div>
+    <div class="rscore" id="rscore"></div>
+    <div class="rmsg" id="rmsg"></div>
+    <div class="wlist" id="wlist" style="display:none">
+      <div class="wlbl">QUESTÕES PARA REVISAR</div>
+      <div id="witems"></div>
+    </div>
+    <button class="rbtn" onclick="restart()">Tentar Novamente</button>
+  </div>
+</div>
+
+<script>
+const Q=[
+  {q:'O que define completamente uma grandeza vetorial?',opts:['Apenas o módulo','Módulo e direção','Módulo, direção e sentido','Apenas a direção'],a:2,exp:'Uma grandeza vetorial precisa de módulo, direção e sentido para ficar completamente determinada.'},
+  {q:'Dois vetores $\\vec{u}$ e $\\vec{v}$ são iguais quando:',opts:['Têm o mesmo módulo','Têm a mesma direção','Têm mesmo módulo e direção','Têm mesmo módulo, direção e sentido'],a:3,exp:'Para igualdade vetorial é necessário: mesmo módulo, mesma direção E mesmo sentido.'},
+  {q:'Dados $\\vec{u}=(2,-3)$ e $\\vec{v}=(-1,4)$, qual é $\\vec{u}+\\vec{v}$?',opts:['$(1,\\,1)$','$(3,\\,-7)$','$(1,\\,7)$','$(-1,\\,1)$'],a:0,exp:'Somando componente a componente: $(2+(-1),\\; -3+4)=(1,1)$.'},
+  {q:'O módulo do vetor $\\vec{v}=(3,-4)$ é:',opts:['$7$','$1$','$5$','$\\sqrt{7}$'],a:2,exp:'$|\\vec{v}|=\\sqrt{3^2+(-4)^2}=\\sqrt{25}=5$.'},
+  {q:'Se $\\alpha>0$ e $\\vec{v}\\neq\\vec{0}$, o vetor $\\alpha\\vec{v}$ em relação a $\\vec{v}$:',opts:['Tem sentido contrário','Tem mesmo sentido','Tem direção perpendicular','Não é paralelo'],a:1,exp:'Quando $\\alpha>0$, o produto $\\alpha\\vec{v}$ preserva a direção e sentido de $\\vec{v}$, escalando o módulo por $|\\alpha|$.'},
+  {q:'O versor de $\\vec{v}=(6,8)$ é:',opts:['$(0{,}6;\\;0{,}8)$','$(6/14;\\;8/14)$','$(1/6;\\;1/8)$','$(-0{,}6;\\;-0{,}8)$'],a:0,exp:'$|\\vec{v}|=\\sqrt{36+64}=10$. Versor $=\\vec{v}/|\\vec{v}|=(0{,}6;\\;0{,}8)$.'},
+  {q:'Os vetores $\\vec{u}=(-2,3)$ e $\\vec{v}=(-4,6)$ são:',opts:['Perpendiculares','Paralelos e mesmo sentido','Paralelos e sentido contrário','Iguais'],a:1,exp:'$\\tfrac{-2}{-4}=\\tfrac{1}{2}$ e $\\tfrac{3}{6}=\\tfrac{1}{2}$. Proporção positiva: paralelos com mesmo sentido.'},
+  {q:'Dados $A(1,2)$ e $B(4,6)$, o vetor $\\overrightarrow{AB}$ tem componentes:',opts:['$(5,\\,8)$','$(3,\\,4)$','$(-3,\\,-4)$','$(4,\\,6)$'],a:1,exp:'$\\overrightarrow{AB}=B-A=(4-1,\\;6-2)=(3,4)$.'},
+  {q:'A propriedade comutativa da adição de vetores afirma que:',opts:['$\\vec{u}+\\vec{v}=\\vec{0}$','$\\vec{u}+\\vec{v}=\\vec{v}+\\vec{u}$','$\\vec{u}+\\vec{0}=\\vec{u}$','$\\vec{u}\\cdot\\vec{v}=\\vec{v}\\cdot\\vec{u}$'],a:1,exp:'A propriedade comutativa afirma que $\\vec{u}+\\vec{v}=\\vec{v}+\\vec{u}$ para quaisquer vetores.'},
+  {q:'Qual ponto $P(x,0)$ do eixo $Ox$ é equidistante de $A(0,3)$ e $B(4,0)$?',opts:['$P\\!\\left(\\tfrac{7}{8},0\\right)$','$P(2,0)$','$P(4,0)$','$P\\!\\left(\\tfrac{7}{2},0\\right)$'],a:0,exp:'$d(P,A)^2=x^2+9$ e $d(P,B)^2=(x-4)^2$. Igualando: $8x=7\\Rightarrow x=\\tfrac{7}{8}$.'},
+];
+
+let cur=0,score=0,wrong=[],answered=false;
+
+function rTeX(el,text){
+  function go(){
+    if(!window.katex){setTimeout(go,80);return;}
+    const parts=text.split(/\$([^$]+)\$/g);
+    el.innerHTML='';
+    parts.forEach((p,i)=>{
+      if(i%2===0){el.appendChild(document.createTextNode(p));}
+      else{const s=document.createElement('span');try{katex.render(p,s,{throwOnError:false});}catch(e){s.textContent=p;}el.appendChild(s);}
+    });
+  }go();
+}
+
+function render(){
+  const q=Q[cur];
+  document.getElementById('qlbl').textContent='QUESTÃO '+(cur+1);
+  document.getElementById('pf').style.width=(cur/Q.length*100)+'%';
+  document.getElementById('ptxt').textContent='Questão '+(cur+1)+' de '+Q.length;
+  document.getElementById('pts').textContent=score+' pts';
+  rTeX(document.getElementById('qtxt'),q.q);
+  const opts=document.getElementById('opts');
+  opts.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt';
+    b.innerHTML='<span style="font-family:Space Mono,monospace;color:var(--muted);margin-right:.45rem">'+['A','B','C','D'][i]+')</span>';
+    const sp=document.createElement('span');
+    rTeX(sp,o);b.appendChild(sp);
+    b.onclick=()=>pick(i);
+    opts.appendChild(b);
+  });
+  document.getElementById('fb').className='fb';
+  document.getElementById('nxt').className='nxtbtn';
+  answered=false;
+}
+
+function pick(i){
+  if(answered)return;answered=true;
+  const q=Q[cur];
+  document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  document.querySelectorAll('.opt')[q.a].classList.add('ok');
+  if(i!==q.a){document.querySelectorAll('.opt')[i].classList.add('no');wrong.push(cur);}
+  else{score++;document.getElementById('pts').textContent=score+' pts';}
+  const fb=document.getElementById('fb');
+  fb.className='fb show '+(i===q.a?'ok':'no');
+  const pre=document.createTextNode(i===q.a?'✓ Correto! ':'✗ Incorreto. ');
+  fb.innerHTML='';fb.appendChild(pre);
+  rTeX(fb,q.exp);
+  const nxt=document.getElementById('nxt');
+  nxt.className='nxtbtn show';
+  nxt.textContent=cur+1<Q.length?'Próxima →':'Ver Resultado →';
+}
+
+function next(){
+  cur++;
+  if(cur>=Q.length){showResult();return;}
+  render();
+}
+
+function showResult(){
+  document.getElementById('qcard').style.display='none';
+  const res=document.getElementById('res');
+  res.className='result show';
+  const pct=Math.round(score/Q.length*100);
+  document.getElementById('remoji').textContent=pct>=80?'🎉':pct>=60?'👍':'📚';
+  document.getElementById('rscore').textContent=score+'/'+Q.length;
+  document.getElementById('rmsg').textContent=pct>=80?'Excelente! Você domina vetores!':pct>=60?'Bom trabalho! Revise alguns conceitos.':'Continue estudando! Você consegue!';
+  if(wrong.length>0){
+    const wl=document.getElementById('wlist');wl.style.display='block';
+    const wi=document.getElementById('witems');
+    wrong.forEach(i=>{const d=document.createElement('div');d.className='witem';d.textContent='• Questão '+(i+1);wi.appendChild(d);});
+  }
+}
+
+function restart(){
+  cur=0;score=0;wrong=[];answered=false;
+  document.getElementById('qcard').style.display='block';
+  document.getElementById('res').className='result';
+  document.getElementById('wlist').style.display='none';
+  document.getElementById('witems').innerHTML='';
+  render();
+}
+
+window.addEventListener('load',()=>setTimeout(render,300));
+</script>
+</body>
+</html>

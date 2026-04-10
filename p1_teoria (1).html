@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css"/>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0e1a;--card:#161e30;--border:#1f2d47;--accent:#00d4ff;--accent2:#ff6b35;--accent3:#7c3aed;--green:#10b981;--text:#e2e8f0;--muted:#64748b}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;padding:1.5rem;min-height:100vh}
+.katex{color:var(--text)!important;font-size:1em!important}
+h1{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.25rem}
+.sub{color:var(--muted);font-size:.88rem;margin-bottom:1.5rem}
+.layout{display:grid;grid-template-columns:190px 1fr;gap:1.25rem}
+.sidebar{display:flex;flex-direction:column;gap:.4rem;position:sticky;top:1rem;height:fit-content}
+.tbtn{padding:.6rem .85rem;border-radius:8px;text-align:left;font-size:.8rem;background:var(--card);color:var(--muted);border:1px solid var(--border);cursor:pointer;font-family:'DM Sans',sans-serif;width:100%;transition:all .2s}
+.tbtn:hover{color:var(--text);border-color:var(--accent)}
+.tbtn.on{background:var(--accent);color:var(--bg);font-weight:700;border-color:var(--accent)}
+.content{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.75rem}
+.topic{display:none}.topic.on{display:block}
+.ttitle{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:var(--accent);margin-bottom:.85rem}
+.body{line-height:2;font-size:.93rem}
+.body p{margin-bottom:.9rem}
+.def{background:rgba(16,185,129,.08);border-left:3px solid var(--green);padding:.7rem 1rem;border-radius:0 8px 8px 0;margin:.85rem 0}
+.def strong{color:var(--green);display:block;margin-bottom:.25rem;font-size:.85rem}
+.formula{background:linear-gradient(135deg,rgba(0,212,255,.07),rgba(124,58,237,.07));border:1px solid rgba(0,212,255,.25);border-radius:10px;padding:.85rem 1.1rem;margin:.85rem 0;text-align:center}
+.prop{background:#111827;border:1px solid var(--border);border-radius:8px;padding:.55rem .8rem;margin-bottom:.38rem;display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;font-size:.88rem}
+.tag{background:var(--accent3);color:#fff;font-size:.67rem;font-weight:700;padding:.13rem .42rem;border-radius:4px;white-space:nowrap;flex-shrink:0}
+@media(max-width:600px){.layout{grid-template-columns:1fr}.sidebar{flex-direction:row;flex-wrap:wrap;position:static}}
+</style>
+</head>
+<body>
+<h1>Teoria — Vetores</h1>
+<p class="sub">Tratamento geométrico e algébrico</p>
+
+<div class="layout">
+  <div class="sidebar">
+    <button class="tbtn on" onclick="show('nocao',this)">Noção de Vetores</button>
+    <button class="tbtn" onclick="show('casos',this)">Casos Particulares</button>
+    <button class="tbtn" onclick="show('adicao',this)">Adição de Vetores</button>
+    <button class="tbtn" onclick="show('mult',this)">Mult. por Escalar</button>
+    <button class="tbtn" onclick="show('coords',this)">Coordenadas — ℝ²</button>
+    <button class="tbtn" onclick="show('espaco',this)">Vetores — ℝ³</button>
+  </div>
+
+  <div class="content">
+
+    <!-- NOÇÃO -->
+    <div id="nocao" class="topic on">
+      <div class="ttitle">Noção de Vetores</div>
+      <div class="body">
+        <p>Existem dois tipos de grandezas: <strong style="color:var(--accent)">escalares</strong> e <strong style="color:var(--accent2)">vetoriais</strong>.</p>
+        <div class="def"><strong>Grandezas Escalares</strong>Definidas por um número real com unidade. Ex: comprimento, área, volume, massa, temperatura.</div>
+        <div class="def"><strong>Grandezas Vetoriais</strong>Precisam de <em>módulo</em>, <em>direção</em> e <em>sentido</em>. Ex: força, velocidade, aceleração.</div>
+        <p>Um <strong style="color:var(--accent)">vetor</strong> é representado por um segmento orientado, indicado por <span id="t1a"></span> ou <span id="t1b"></span>, onde <span id="t1c"></span> é a origem e <span id="t1d"></span> a extremidade.</p>
+        <div class="formula" id="t1e"></div>
+        <p>Dois segmentos representam o <strong>mesmo vetor</strong> se têm mesmo módulo, direção e sentido. O vetor é chamado <em>vetor livre</em> pois seu representante pode ter origem em qualquer ponto.</p>
+        <div class="def"><strong>Módulo</strong>O módulo de <span id="t1f"></span> é indicado por <span id="t1g"></span> ou <span id="t1h"></span>.</div>
+      </div>
+    </div>
+
+    <!-- CASOS -->
+    <div id="casos" class="topic">
+      <div class="ttitle">Casos Particulares</div>
+      <div class="body">
+        <div class="prop"><span class="tag">Paralelos</span><span id="c1"></span><span>— mesma direção (mesmo ou oposto sentido)</span></div>
+        <div class="prop"><span class="tag">Iguais</span><span id="c2"></span><span>— mesmo módulo, direção e sentido</span></div>
+        <div class="prop"><span class="tag">Vetor Nulo</span><span id="c3"></span><span>— origem coincide com extremidade; paralelo a qualquer vetor</span></div>
+        <div class="prop"><span class="tag">Oposto</span><span id="c4"></span><span>— mesmo módulo e direção, sentido contrário. Se <span id="c4b"></span>, então <span id="c4c"></span></span></div>
+        <div class="prop"><span class="tag">Unitário</span><span id="c5"></span><span>— módulo igual a 1</span></div>
+        <div class="prop"><span class="tag">Versor</span><span id="c6a"></span><span>— vetor unitário de mesmo sentido de <span id="c6b"></span>: <span id="c6c"></span></span></div>
+        <div class="prop"><span class="tag">Ortogonais</span><span id="c7"></span><span>— representantes formam ângulo reto</span></div>
+        <div class="prop"><span class="tag">Coplanares</span><span>— dois vetores quaisquer são sempre coplanares</span></div>
+      </div>
+    </div>
+
+    <!-- ADIÇÃO -->
+    <div id="adicao" class="topic">
+      <div class="ttitle">Adição de Vetores</div>
+      <div class="body">
+        <p>Dados <span id="a1"></span> e <span id="a2"></span>, a soma <span id="a3"></span> é obtida pela <strong>Regra do Triângulo</strong> ou pela <strong>Regra do Paralelogramo</strong>.</p>
+        <div class="def"><strong>Regra do Triângulo</strong>Coloca-se <span id="a4"></span> com origem na extremidade de <span id="a5"></span>. A soma vai da origem de <span id="a6"></span> até a extremidade de <span id="a7"></span>.</div>
+        <div class="formula" id="a8"></div>
+        <p>Propriedades (<span id="a9"></span> vetores quaisquer):</p>
+        <div class="prop"><span class="tag">I — Comutativa</span><span id="a10"></span></div>
+        <div class="prop"><span class="tag">II — Associativa</span><span id="a11"></span></div>
+        <div class="prop"><span class="tag">III — Neutro</span><span id="a12"></span></div>
+        <div class="prop"><span class="tag">IV — Oposto</span><span id="a13"></span></div>
+        <p style="margin-top:.9rem">A diferença <span id="a14"></span> escreve-se <span id="a15"></span>. No paralelogramo, soma e diferença correspondem às duas diagonais.</p>
+      </div>
+    </div>
+
+    <!-- MULT -->
+    <div id="mult" class="topic">
+      <div class="ttitle">Multiplicação por Escalar</div>
+      <div class="body">
+        <p>Dado <span id="m1"></span> e <span id="m2"></span>, o produto <span id="m3"></span> tem:</p>
+        <div class="prop"><span class="tag">Módulo</span><span id="m4"></span></div>
+        <div class="prop"><span class="tag">Direção</span><span id="m5"></span><span> é paralelo a </span><span id="m5b"></span></div>
+        <div class="prop"><span class="tag">Sentido</span><span>mesmo se <span id="m6"></span>; contrário se <span id="m7"></span></span></div>
+        <p style="margin-top:.9rem">Propriedades (<span id="m8"></span>; <span id="m9"></span> vetores quaisquer):</p>
+        <div class="prop"><span class="tag">I</span><span id="m10"></span></div>
+        <div class="prop"><span class="tag">II</span><span id="m11"></span></div>
+        <div class="prop"><span class="tag">III</span><span id="m12"></span></div>
+        <div class="prop"><span class="tag">IV</span><span id="m13"></span></div>
+        <div class="def" style="margin-top:1rem"><strong>Versor de <span id="m14"></span></strong><div id="m15" style="text-align:center;margin:.5rem 0"></div>Vetor unitário de mesmo sentido de <span id="m16"></span>.</div>
+      </div>
+    </div>
+
+    <!-- COORDS -->
+    <div id="coords" class="topic">
+      <div class="ttitle">Coordenadas — ℝ²</div>
+      <div class="body">
+        <p>Na base canônica <span id="r1"></span> do plano <span id="r2"></span>, com <span id="r3"></span> e <span id="r4"></span>:</p>
+        <div class="formula" id="r5"></div>
+        <p><span id="r6"></span> é a <strong>abscissa</strong> e <span id="r7"></span> é a <strong>ordenada</strong> de <span id="r8"></span>. Sejam <span id="r9"></span> e <span id="r10"></span>:</p>
+        <div class="prop"><span class="tag">Soma</span><span id="r11"></span></div>
+        <div class="prop"><span class="tag">Escalar</span><span id="r12"></span></div>
+        <div class="prop"><span class="tag">Módulo</span><span id="r13"></span></div>
+        <div class="prop"><span class="tag">Ponto médio</span><span id="r14"></span></div>
+        <div class="prop"><span class="tag">Paralelismo</span><span id="r15"></span></div>
+        <div class="def" style="margin-top:1rem"><strong>Vetor por dois pontos</strong><div id="r16" style="text-align:center;margin:.5rem 0"></div></div>
+        <div class="def"><strong>Distância entre dois pontos</strong><div id="r17" style="text-align:center;margin:.5rem 0"></div></div>
+      </div>
+    </div>
+
+    <!-- ESPAÇO -->
+    <div id="espaco" class="topic">
+      <div class="ttitle">Vetores — ℝ³</div>
+      <div class="body">
+        <p>No espaço, a base canônica <span id="e1"></span> determina o sistema <span id="e2"></span>:</p>
+        <div class="prop"><span class="tag">eixo x</span><span id="e3"></span></div>
+        <div class="prop"><span class="tag">eixo y</span><span id="e4"></span></div>
+        <div class="prop"><span class="tag">eixo z</span><span id="e5"></span></div>
+        <div class="formula" id="e6"></div>
+        <div class="prop"><span class="tag">Módulo</span><span id="e7"></span></div>
+        <div class="prop"><span class="tag">Ponto médio</span><span id="e8"></span></div>
+        <div class="prop"><span class="tag">Paralelismo</span><span id="e9"></span></div>
+        <p style="margin-top:.9rem">Três vetores <strong>não-coplanares</strong> formam uma base: qualquer vetor do espaço é combinação linear única desses três vetores.</p>
+        <div class="def"><strong>Vetor por dois pontos em ℝ³</strong><div id="e10" style="text-align:center;margin:.5rem 0"></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function show(id,btn){
+  document.querySelectorAll('.topic').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  btn.classList.add('on');
+}
+function K(id,tex,d){
+  const el=document.getElementById(id);
+  if(!el)return;
+  function r(){if(window.katex){katex.render(tex,el,{throwOnError:false,displayMode:!!d});}else{setTimeout(r,80);}}
+  r();
+}
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    // Noção
+    K('t1a','\\vec{v}');K('t1b','\\overrightarrow{AB}');K('t1c','A');K('t1d','B');
+    K('t1e','\\vec{v}=\\overrightarrow{AB}',1);
+    K('t1f','\\vec{v}');K('t1g','|\\vec{v}|');K('t1h','\\|\\vec{v}\\|');
+    // Casos
+    K('c1','\\vec{u}\\parallel\\vec{v}');K('c2','\\vec{u}=\\vec{v}');K('c3','\\vec{0}');
+    K('c4','-\\vec{v}');K('c4b','\\vec{v}=\\overrightarrow{AB}');K('c4c','-\\vec{v}=\\overrightarrow{BA}');
+    K('c5','|\\vec{u}|=1');K('c6a','\\hat{v}');K('c6b','\\vec{v}');K('c6c','\\hat{v}=\\dfrac{\\vec{v}}{|\\vec{v}|}');
+    K('c7','\\vec{u}\\perp\\vec{v}');
+    // Adição
+    K('a1','\\vec{u}');K('a2','\\vec{v}');K('a3','\\vec{u}+\\vec{v}');
+    K('a4','\\vec{v}');K('a5','\\vec{u}');K('a6','\\vec{u}');K('a7','\\vec{v}');
+    K('a8','\\overrightarrow{AB}+\\overrightarrow{BC}=\\overrightarrow{AC}',1);
+    K('a9','\\vec{u},\\vec{v},\\vec{w}');
+    K('a10','\\vec{u}+\\vec{v}=\\vec{v}+\\vec{u}');
+    K('a11','(\\vec{u}+\\vec{v})+\\vec{w}=\\vec{u}+(\\vec{v}+\\vec{w})');
+    K('a12','\\vec{u}+\\vec{0}=\\vec{u}');K('a13','\\vec{u}+(-\\vec{u})=\\vec{0}');
+    K('a14','\\vec{u}+(-\\vec{v})');K('a15','\\vec{u}-\\vec{v}');
+    // Mult
+    K('m1','\\vec{v}\\neq\\vec{0}');K('m2','\\alpha\\in\\mathbb{R},\\;\\alpha\\neq 0');
+    K('m3','\\alpha\\vec{v}');K('m4','|\\alpha\\vec{v}|=|\\alpha|\\,|\\vec{v}|');
+    K('m5','\\alpha\\vec{v}');K('m5b','\\vec{v}');K('m6','\\alpha>0');K('m7','\\alpha<0');
+    K('m8','\\alpha,\\beta\\in\\mathbb{R}');K('m9','\\vec{u},\\vec{v}');
+    K('m10','(\\alpha\\beta)\\vec{v}=\\alpha(\\beta\\vec{v})');
+    K('m11','(\\alpha+\\beta)\\vec{v}=\\alpha\\vec{v}+\\beta\\vec{v}');
+    K('m12','\\alpha(\\vec{u}+\\vec{v})=\\alpha\\vec{u}+\\alpha\\vec{v}');
+    K('m13','1\\cdot\\vec{v}=\\vec{v}');
+    K('m14','\\vec{v}');K('m15','\\hat{v}=\\dfrac{\\vec{v}}{|\\vec{v}|}',1);K('m16','\\vec{v}');
+    // Coords R2
+    K('r1','C=\\{\\vec{\\imath},\\vec{\\jmath}\\}');K('r2','xOy');
+    K('r3','\\vec{\\imath}=(1,0)');K('r4','\\vec{\\jmath}=(0,1)');
+    K('r5','\\vec{v}=x\\,\\vec{\\imath}+y\\,\\vec{\\jmath}=(x,\\,y)',1);
+    K('r6','x');K('r7','y');K('r8','\\vec{v}');
+    K('r9','\\vec{u}=(x_1,y_1)');K('r10','\\vec{v}=(x_2,y_2)');
+    K('r11','\\vec{u}+\\vec{v}=(x_1+x_2,\\;y_1+y_2)');
+    K('r12','\\alpha\\vec{u}=(\\alpha x_1,\\;\\alpha y_1)');
+    K('r13','|\\vec{v}|=\\sqrt{x^2+y^2}');
+    K('r14','M=\\left(\\dfrac{x_1+x_2}{2},\\;\\dfrac{y_1+y_2}{2}\\right)');
+    K('r15','\\vec{u}\\parallel\\vec{v}\\iff\\dfrac{x_1}{x_2}=\\dfrac{y_1}{y_2}');
+    K('r16','\\overrightarrow{AB}=B-A=(x_2-x_1,\\;y_2-y_1)',1);
+    K('r17','d(A,B)=\\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}',1);
+    // R3
+    K('e1','\\{\\vec{\\imath},\\vec{\\jmath},\\vec{k}\\}');K('e2','Oxyz');
+    K('e3','\\vec{\\imath}=(1,0,0)');K('e4','\\vec{\\jmath}=(0,1,0)');K('e5','\\vec{k}=(0,0,1)');
+    K('e6','\\vec{v}=x\\,\\vec{\\imath}+y\\,\\vec{\\jmath}+z\\,\\vec{k}=(x,y,z)',1);
+    K('e7','|\\vec{v}|=\\sqrt{x^2+y^2+z^2}');
+    K('e8','M=\\left(\\dfrac{x_1{+}x_2}{2},\\dfrac{y_1{+}y_2}{2},\\dfrac{z_1{+}z_2}{2}\\right)');
+    K('e9','\\dfrac{x_1}{x_2}=\\dfrac{y_1}{y_2}=\\dfrac{z_1}{z_2}');
+    K('e10','\\overrightarrow{AB}=(x_2-x_1,\\;y_2-y_1,\\;z_2-z_1)',1);
+  },300);
+});
+</script>
+</body>
+</html>

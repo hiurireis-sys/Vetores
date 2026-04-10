@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css"/>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0e1a;--card:#161e30;--border:#1f2d47;--accent:#00d4ff;--accent2:#ff6b35;--accent3:#7c3aed;--text:#e2e8f0;--muted:#64748b}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;padding:1.5rem;min-height:100vh}
+.katex{color:var(--text)!important;font-size:1em!important}
+h1{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.25rem}
+.sub{color:var(--muted);font-size:.88rem;margin-bottom:1.5rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1.1rem}
+.ahead{display:flex;align-items:flex-start;gap:.85rem;margin-bottom:1rem}
+.aicon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.atitle{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:.2rem}
+.actx{font-size:.86rem;color:var(--muted);line-height:1.6}
+.steps{list-style:none;display:flex;flex-direction:column;gap:.45rem;margin-bottom:.85rem}
+.step{display:flex;align-items:flex-start;gap:.6rem;font-size:.86rem;line-height:1.6;padding:.55rem .65rem;background:#111827;border-radius:7px}
+.num{background:var(--accent3);color:#fff;width:19px;height:19px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.67rem;font-weight:700;flex-shrink:0;margin-top:2px}
+.sbtn{padding:.45rem 1rem;border-radius:7px;font-size:.79rem;background:#111827;border:1px solid var(--border);color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.sbtn:hover{border-color:var(--accent2);color:var(--accent2)}
+.sol{margin-top:.6rem;padding:.9rem;border-radius:9px;background:rgba(255,107,53,.08);border:1px solid rgba(255,107,53,.3);line-height:1.9;font-size:.87rem;display:none}
+.sol.show{display:block}
+</style>
+</head>
+<body>
+<h1>Aplicações</h1>
+<p class="sub">Problemas contextualizados com vetores no mundo real</p>
+<div id="cont"></div>
+
+<script>
+const ATIV=[
+  {icon:'✈️',bg:'rgba(0,212,255,0.1)',title:'Navegação Aérea',
+   ctx:'Um avião voa a 400 km/h na direção Nordeste (40° a partir do Norte). O vento sopra a 50 km/h para Leste. Determine a velocidade resultante.',
+   steps:['$\\vec{v}_{\\text{avião}}=(400\\sin 40°,\\;400\\cos 40°)\\approx(257{,}1;\\;306{,}4)\\;\\text{km/h}$','$\\vec{v}_{\\text{vento}}=(50,\\;0)\\;\\text{km/h}$','Some os vetores: $\\vec{v}_{res}=(307{,}1;\\;306{,}4)\\;\\text{km/h}$','Módulo: $|\\vec{v}_{res}|=\\sqrt{307{,}1^2+306{,}4^2}\\approx434\\;\\text{km/h}$'],
+   sol:'O avião voa a aproximadamente <strong style="color:#ff6b35">434 km/h</strong>, com desvio de ≈ 45° em relação ao Norte.'},
+  {icon:'⚽',bg:'rgba(16,185,129,0.1)',title:'Força Resultante em Física',
+   ctx:'Dois jogadores aplicam forças: $\\vec{F}_1=(3,4)$ N e $\\vec{F}_2=(-1,2)$ N. Determine a força resultante e seu módulo.',
+   steps:['$\\vec{F}_{res}=(3+(-1),\\;4+2)=(2,6)\\;\\text{N}$','$|\\vec{F}_{res}|=\\sqrt{4+36}=\\sqrt{40}=2\\sqrt{10}\\approx6{,}32\\;\\text{N}$'],
+   sol:'$\\vec{F}_{res}=(2,6)\\;\\text{N}$ com módulo $\\approx 6{,}32\\;\\text{N}$.'},
+  {icon:'🗺️',bg:'rgba(124,58,237,0.1)',title:'GPS e Deslocamento',
+   ctx:'Uma pessoa parte de $A(-2,3)$ na direção $\\vec{v}=(4,-1)$. Após percorrer distância $3|\\vec{v}|$, em que ponto $B$ ela chega?',
+   steps:['Módulo: $|\\vec{v}|=\\sqrt{16+1}=\\sqrt{17}$','Deslocamento total: $3\\vec{v}=3(4,-1)=(12,-3)$','Ponto de chegada: $B=A+3\\vec{v}=(-2{+}12,\\;3{-}3)=(10,0)$'],
+   sol:'$B=(10,\\;0)$. Distância percorrida: $3\\sqrt{17}\\approx12{,}4$ unidades de comprimento.'},
+  {icon:'🏗️',bg:'rgba(245,158,11,0.1)',title:'Equilíbrio de Forças',
+   ctx:'Uma ponte tem três cabos: $\\vec{F}_1=(0,500)$, $\\vec{F}_2=(200,-300)$ e $\\vec{F}_3=(a,b)$. Para equilíbrio, $\\vec{F}_1+\\vec{F}_2+\\vec{F}_3=\\vec{0}$. Determine $\\vec{F}_3$.',
+   steps:['Equilíbrio: $\\vec{F}_1+\\vec{F}_2+\\vec{F}_3=\\vec{0}$','Portanto: $\\vec{F}_3=-(\\vec{F}_1+\\vec{F}_2)$','$\\vec{F}_1+\\vec{F}_2=(200,\\;200)$','$\\vec{F}_3=(-200,\\;-200)\\;\\text{N},\\quad|\\vec{F}_3|=200\\sqrt{2}\\approx283\\;\\text{N}$'],
+   sol:'$\\vec{F}_3=(-200,\\;-200)\\;\\text{N}$ com módulo $\\approx283\\;\\text{N}$.'},
+];
+
+function rTeX(el,text){
+  function go(){
+    if(!window.katex){setTimeout(go,80);return;}
+    const parts=text.split(/\$([^$]+)\$/g);
+    el.innerHTML='';
+    parts.forEach((p,i)=>{
+      if(i%2===0){el.appendChild(document.createTextNode(p));}
+      else{const s=document.createElement('span');try{katex.render(p,s,{throwOnError:false});}catch(e){s.textContent=p;}el.appendChild(s);}
+    });
+  }go();
+}
+
+window.addEventListener('load',()=>{
+  const cont=document.getElementById('cont');
+  ATIV.forEach((a,i)=>{
+    const d=document.createElement('div');
+    d.className='card';
+    d.innerHTML=`<div class="ahead">
+  <div class="aicon" style="background:${a.bg}">${a.icon}</div>
+  <div><div class="atitle">${a.title}</div><div class="actx" id="actx${i}"></div></div>
+</div>
+<ul class="steps" id="steps${i}"></ul>
+<button class="sbtn" onclick="tog(${i})">▼ Ver solução</button>
+<div class="sol" id="sol${i}"></div>`;
+    cont.appendChild(d);
+    setTimeout(()=>{
+      rTeX(document.getElementById('actx'+i), a.ctx);
+      const ul=document.getElementById('steps'+i);
+      a.steps.forEach((s,j)=>{
+        const li=document.createElement('li');li.className='step';
+        li.innerHTML=`<div class="num">${j+1}</div><span id="s${i}_${j}"></span>`;
+        ul.appendChild(li);
+        rTeX(document.getElementById('s'+i+'_'+j),s);
+      });
+      rTeX(document.getElementById('sol'+i),a.sol);
+    },300);
+  });
+});
+
+function tog(i){
+  const s=document.getElementById('sol'+i),b=s.previousElementSibling;
+  if(s.classList.contains('show')){s.classList.remove('show');b.textContent='▼ Ver solução';}
+  else{s.classList.add('show');b.textContent='▲ Ocultar solução';}
+}
+</script>
+</body>
+</html>
